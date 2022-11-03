@@ -1,5 +1,7 @@
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { toDoState } from "./atoms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,12 +33,16 @@ const Card = styled.div`
   border-radius: 5px;
 `;
 
-const toDos = ["a", "b", "c", "d", "e", "f"];
 
 function App() {
-  const onDragEnd = () => {
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  /**
+   * 해당 함수는 드래그가 끝났을 때 실행된느 함수
+   */
+  const onDragEnd = ({destination, source} : DropResult) => {
+    
+  } 
 
-  }
   return (
     <Wrapper>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -45,7 +51,7 @@ function App() {
             {(magic) => (
               <Board ref={magic.innerRef} {...magic.droppableProps}>                
                 {toDos.map((toDo, idx) => (
-                  <Draggable draggableId={toDo} index={idx}>
+                  <Draggable key={idx} draggableId={toDo} index={idx}>
                   {(magic) => (
                       <Card 
                         ref={magic.innerRef} 
