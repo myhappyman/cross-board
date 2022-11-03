@@ -67,3 +67,15 @@ DragDropContext의 props인 onDragEnd는 드래그 앤 드랍이 끝나면
 동작되는 함수이다.
 해당 함수의 첫번째 파라미터를 찍어보면 굉장히 많은 드래그 앤 드랍 처리에 대한 값들이 나오는데 어떤 데이터를 가지고 몇번째에 떨궜는지
 어떤 보드에 내려놨는지 다 구분이 될 수 있도록 알려주고 있다.
+
+7.6 reOrdering2
+splice를 통해 실제 atom의 state값을 변형 시키는데 성공했다.
+
+1. 원래값을 복사한다 [...array]
+2. 복사한 배열에 source.index로 없어져야 할 위치의 값을 지운다.
+3. destination.index 위치에 새로 넣을 draggableId을 넣는다.
+4. set에서 처리하고 return한다.
+
+다만 해당 방법을 하다보면 오류가 발생하는 것이 draggable key는
+draggableId와 같아야해서 오류가 발생한다
+그 동안 map을 만들때 key는 index값으로 처리했지만, dnd에서는 draggableId와 똑같이 처리해준다.
