@@ -53,3 +53,11 @@ draggableProps와 dragHandleProps이다.
 지금까지 들은걸 어느정도 정리를 해보자면 아래와 같다.
 {...magic.draggableProps}을 처리하면 드래그 드랍이 됐을 때 움직일 덩어리 자체가 되고,
 {...magic.dragHandleProps}을 처리하면 드래그가 가능한 부분을 설정할 수 있다. 이것을 제외한 부모요소들은 드래그가 불가능해진다.(옮겨지긴함.)
+
+7.4 style처리 및 placeholder(사이즈 고정시키기)
+typescript를 쓰는 덕택에 vscode와 타입스크립트의 도움으로 각 함수의 파라미터들 즉 object의 type을 볼수가 있다. 궁금한 부분의 오른쪽 클릭 후 형식 정의로 이동을 누르면 정의된 내용을 볼 수 있다.
+
+-placeholder
+droppable이 끝날 때 두는 어떤 것
+{magic.placeholder}
+해당 처리를 영역 마지막 부분에 두는것으로 더 이상 사이즈가 줄어들었다가 늘어났다하지 않는 것을 볼 수 있다.
