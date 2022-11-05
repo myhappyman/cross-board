@@ -95,3 +95,6 @@ Droppable에는 하위 children을 생성할때
   -isDraggingOver : 드래그 중인 곳에 true처리 아닌곳에 false값을 준다.
   -draggingFromThisWith: 드래그를해서 해당 영역을 벗어나면 발생
   즉 기존의 영역을 벗어난곳에 어떤 문자열을 준다.
+
+  7.12 finish Styles
+  Draggable에도 마찬가지로 2번쨰 인자를 자식 생성하는 위치에서 받을 수 있는데, 다양한 기능들을 제공한다.

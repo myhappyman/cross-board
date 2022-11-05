@@ -5,7 +5,7 @@ import DraggableCard from "./DraggableCard";
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.boardColor};
-  padding: 30px 10px 20px 10px;
+  padding-top: 10px;
   border-radius: 5px;
   min-height: 200px;
   display: flex;
@@ -26,10 +26,11 @@ interface IArea{
 
 const Area = styled.div<IArea>`
     background-color: ${props => props.isDraggingOver 
-                            ? "pink" 
-                            : props.draggingFromThisWith ? "red" : "blue"};
+                            ? "#dfe6e9" 
+                            : props.draggingFromThisWith ? "#b2bec3" : "transparent"};
     flex-grow: 1;
     transition: background-color .3 ease-in-out;
+    padding: 20px;
 `;
 
 interface IBoardProps {
