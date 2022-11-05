@@ -30,8 +30,10 @@ function App() {
   const onDragEnd = (info: DropResult) => {
     console.log(info);
     const {destination, draggableId, source} = info;
-    if(destination?.droppableId === source.droppableId){
-      //same board
+    if(!destination) return; //가끔 destination이 undefined이거나 없는경우가 있어서 처리함.
+
+    //same board
+    if(destination?.droppableId === source.droppableId){      
       // 1.수정이 일어난 보드의 데이터만 복사한다.
       setToDos((allBoards) => {
         const boardCopy = [...allBoards[source.droppableId]];
@@ -45,8 +47,23 @@ function App() {
           [source.droppableId]: boardCopy
         };
       });
-    }else{
-      //other board
+
+    //other board
+    }else if(destination?.droppableId !== source.droppableId){
+      setToDos((allBoards) => {
+        const sourceBoard = [...allBoards[source.droppableId]];
+        const destinationBoard = [...allBoards[destination.droppableId]];
+
+        sourceBoard.splice(source.index, 1);
+        destinationBoard.splice(destination.index, 0, draggableId);
+
+        return {
+          ...allBoards,
+          [source.droppableId]: sourceBoard,
+          [destination.droppableId]: destinationBoard
+        }
+      });
+
     }
     
   } 
