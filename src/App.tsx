@@ -27,17 +27,28 @@ function App() {
   /**
    * 해당 함수는 드래그가 끝났을 때 실행된느 함수
    */
-  const onDragEnd = ({draggableId, destination, source} : DropResult) => {
-    if(!destination) return;
-    // setToDos(oldToDos => {
-    //   const copyToDos = [...oldToDos];
-    //   //1) source.index에서 해당하는 아이템을 copy array에서 삭제한다.
-    //   //2) destination.index를 통해 해당 위치에 draggableId를 넣기
-
-    //   copyToDos.splice(source.index, 1); //1)
-    //   copyToDos.splice(destination?.index, 0, draggableId); //2)
-    //   return copyToDos;
-    // });
+  const onDragEnd = (info: DropResult) => {
+    console.log(info);
+    const {destination, draggableId, source} = info;
+    if(destination?.droppableId === source.droppableId){
+      //same board
+      // 1.수정이 일어난 보드의 데이터만 복사한다.
+      setToDos((allBoards) => {
+        const boardCopy = [...allBoards[source.droppableId]];
+        //1) source.index에서 해당하는 아이템을 copy array에서 삭제한다.
+        //2) destination.index를 통해 해당 위치에 draggableId를 넣기
+        boardCopy.splice(source.index, 1); //1);
+        boardCopy.splice(destination?.index, 0, draggableId); //2);
+        //return을 해줄 때는 복사한 수정된 board와 나머지 board도 return해야한다.
+        return {
+          ...allBoards,
+          [source.droppableId]: boardCopy
+        };
+      });
+    }else{
+      //other board
+    }
+    
   } 
 
   return (
