@@ -86,3 +86,12 @@ state에 변화가 있었기 때문에 react에서는 새롭게 그리기 위해
 React 기초에서 배웠던 react memo를 사용하면 컴포넌트로부터 prop이 바뀌지 않는다면 렌더링하지 말라고 처리를 해줄 수 있다.
 
 state가 변경되었다고 무조건 다시 생성해야할 필요가 없는 최적화를 진행해야할경우 react memo는 이런 행위를 도와줄 것이다.
+
+7.11 Droppable Snapshot
+Droppable에는 하위 children을 생성할때
+첫번째 인자로 magic, 두번째는 snapshot의 파라미터를 받는다.
+
+- snapshot이 전달하는 데이터들
+  -isDraggingOver : 드래그 중인 곳에 true처리 아닌곳에 false값을 준다.
+  -draggingFromThisWith: 드래그를해서 해당 영역을 벗어나면 발생
+  즉 기존의 영역을 벗어난곳에 어떤 문자열을 준다.
