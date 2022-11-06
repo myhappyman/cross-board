@@ -92,9 +92,16 @@ Droppable에는 하위 children을 생성할때
 첫번째 인자로 magic, 두번째는 snapshot의 파라미터를 받는다.
 
 - snapshot이 전달하는 데이터들
-  -isDraggingOver : 드래그 중인 곳에 true처리 아닌곳에 false값을 준다.
-  -draggingFromThisWith: 드래그를해서 해당 영역을 벗어나면 발생
-  즉 기존의 영역을 벗어난곳에 어떤 문자열을 준다.
+- isDraggingOver : 드래그 중인 곳에 true처리 아닌곳에 false값을 준다.
+- draggingFromThisWith: 드래그를해서 해당 영역을 벗어나면 발생 즉 기존의 영역을 벗어난곳에 어떤 문자열을 준다.
 
-  7.12 finish Styles
-  Draggable에도 마찬가지로 2번쨰 인자를 자식 생성하는 위치에서 받을 수 있는데, 다양한 기능들을 제공한다.
+---
+
+7.12 finish Styles
+Draggable에도 마찬가지로 2번쨰 인자를 자식 생성하는 위치에서 받을 수 있는데, 다양한 기능들을 제공한다.
+
+7.13 Refs
+react의 useRef는 기존 vanilla js에서 document.getElementById등을 통해 요소 자체를 받아오던것과 비슷한 행위다.
+그 요소를 받아와서 focus나 blur와 같은 특정 강제 행위를 처리할 수 있다.
+즉 reference란 HTML의 어떤 요소를 가져와서 변형할 수 있도록 하는것을 말한다.
+여기서 처리하는 ref, useRef는 react이지만 그외에 실제 처리하는부분들은 react가 아닌 전부 vanilla js들이다.
