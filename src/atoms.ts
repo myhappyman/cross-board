@@ -18,4 +18,4 @@ export const toDoState = atom<IToDoState>({
         DOING: [],
         DONE: [],
     }
-})
+});

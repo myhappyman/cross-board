@@ -37,10 +37,11 @@ function App() {
       // 1.수정이 일어난 보드의 데이터만 복사한다.
       setToDos((allBoards) => {
         const boardCopy = [...allBoards[source.droppableId]];
+        const taskObj = boardCopy[source.index];
         //1) source.index에서 해당하는 아이템을 copy array에서 삭제한다.
         //2) destination.index를 통해 해당 위치에 draggableId를 넣기
         boardCopy.splice(source.index, 1); //1);
-        boardCopy.splice(destination?.index, 0, draggableId); //2);
+        boardCopy.splice(destination?.index, 0, taskObj); //2);
         //return을 해줄 때는 복사한 수정된 board와 나머지 board도 return해야한다.
         return {
           ...allBoards,
@@ -52,10 +53,11 @@ function App() {
     }else if(destination?.droppableId !== source.droppableId){
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
+        const taskObj = sourceBoard[source.index];
         const destinationBoard = [...allBoards[destination.droppableId]];
 
         sourceBoard.splice(source.index, 1);
-        destinationBoard.splice(destination.index, 0, draggableId);
+        destinationBoard.splice(destination.index, 0, taskObj);
 
         return {
           ...allBoards,
