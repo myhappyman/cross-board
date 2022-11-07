@@ -53,6 +53,7 @@ const Trash = styled.div<IArea>`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
+  console.log(toDos);
   
   /**
    * 해당 함수는 드래그가 끝났을 때 실행된느 함수

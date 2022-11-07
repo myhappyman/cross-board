@@ -13,8 +13,6 @@ interface IToDoState{
 
 const localStorageEffect = (key: string) => ({ setSelf, onSet }: any) => {
     const savedValue = localStorage.getItem(key);
-    console.log("localStorageEffect");
-    console.log(savedValue);
     if (savedValue !== null) {
         setSelf(JSON.parse(savedValue));
     }
@@ -27,8 +25,6 @@ const localStorageEffect = (key: string) => ({ setSelf, onSet }: any) => {
 
 const sessionStorageEffect = (key: string) => ({ setSelf, onSet }: any) => {
     const savedValue = sessionStorage.getItem(key);
-    console.log("sessionStorageEffect");
-    console.log(savedValue);
     if (savedValue !== null) {
         setSelf(JSON.parse(savedValue));
     }
@@ -40,11 +36,14 @@ const sessionStorageEffect = (key: string) => ({ setSelf, onSet }: any) => {
 };
 
 export const toDoState = atom<IToDoState>({
-    key: "toDo",
+    key: "crossBoardToDo",
     default: {
         TODO: [],
         DOING: [],
         DONE: [],
     },
-    // effects: [localStorageEffect("toDo"), sessionStorageEffect("toDo")],
+    effects: [
+            localStorageEffect("crossBoardToDo"), 
+            sessionStorageEffect("crossBoardToDo")
+    ],
 });

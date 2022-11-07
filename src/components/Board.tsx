@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { ITodo, toDoState } from "../atoms";
-import { Form, Input, MiniTitle } from "./BasicTag";
+import { Form, Input } from "./BasicTag";
 import DraggableCard from "./DraggableCard";
 
 interface IArea{
@@ -38,6 +38,21 @@ const Area = styled.div<IArea>`
     padding: 20px;
 `;
 
+const TitleWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    h2{
+        width: calc(100% - 20px);
+        word-break: break-all;
+    }
+    button{
+        width: 20px;
+        text-align: center;
+        border: none;
+    }
+`;
+
 function Board({toDos, boardId}:IBoardProps){
     const {register, setValue, handleSubmit} = useForm<IForm>();
     const setToDos = useSetRecoilState(toDoState);
@@ -57,7 +72,10 @@ function Board({toDos, boardId}:IBoardProps){
 
     return (
         <Wrapper >
-            <MiniTitle>{boardId}</MiniTitle>
+            <TitleWrapper>
+                <h2>{boardId}</h2>
+                <button>X</button>
+            </TitleWrapper>
             <Form onSubmit={handleSubmit(onValid)}>
                 <Input 
                     {...register("toDo",

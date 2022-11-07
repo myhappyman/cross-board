@@ -9,16 +9,18 @@ export const Label = styled.label`
     padding: 10px;
     background-color: ${props => props.theme.buttonColor};
     color: ${props => props.theme.buttonTextColor};
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
 export const Input = styled.input`
     border: none;
     outline: none;
     min-height: 36px;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 36px;
     padding: 0 15px;
     margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
 export const Button = styled.button`
@@ -26,11 +28,5 @@ export const Button = styled.button`
     outline: none;
     background-color: ${props => props.theme.buttonColor};
     color: ${props => props.theme.buttonTextColor};
-`;
-
-export const MiniTitle = styled.h2`
-    text-align: center;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
