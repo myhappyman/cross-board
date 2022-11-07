@@ -11,11 +11,40 @@ interface IToDoState{
     [key:string]: ITodo[]; 
 }
 
+const localStorageEffect = (key: string) => ({ setSelf, onSet }: any) => {
+    const savedValue = localStorage.getItem(key);
+    console.log("localStorageEffect");
+    console.log(savedValue);
+    if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+    }
+
+    onSet((newValue: any, _: any, isReset: boolean) => {
+        isReset ? localStorage.removeItem(key)
+        : localStorage.setItem(key, JSON.stringify(newValue));
+    });
+};
+
+const sessionStorageEffect = (key: string) => ({ setSelf, onSet }: any) => {
+    const savedValue = sessionStorage.getItem(key);
+    console.log("sessionStorageEffect");
+    console.log(savedValue);
+    if (savedValue !== null) {
+        setSelf(JSON.parse(savedValue));
+    }
+    onSet((newValue: any, _: any, isReset: any) => {
+        const confirm = newValue.length === 0;
+        confirm ? sessionStorage.removeItem(key)
+        : sessionStorage.setItem(key, JSON.stringify(newValue));
+    });
+};
+
 export const toDoState = atom<IToDoState>({
     key: "toDo",
     default: {
         TODO: [],
         DOING: [],
         DONE: [],
-    }
+    },
+    // effects: [localStorageEffect("toDo"), sessionStorageEffect("toDo")],
 });

@@ -1,9 +1,24 @@
 import { Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { ITodo, toDoState } from "../atoms";
+import { Form, Input, MiniTitle } from "./BasicTag";
 import DraggableCard from "./DraggableCard";
+
+interface IArea{
+    isDraggingOver: boolean;
+    draggingFromThisWith: boolean;
+}
+
+interface IBoardProps {
+    toDos: ITodo[],
+    boardId: string;
+}
+
+interface IForm{
+    toDo: string;
+}
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.boardColor};
@@ -14,18 +29,6 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.h2`
-    text-align: center;
-    font-weight: 600;
-    margin-bottom: 10px;
-    font-size: 18px;
-`;
-
-interface IArea{
-    isDraggingOver: boolean;
-    draggingFromThisWith: boolean;
-}
-
 const Area = styled.div<IArea>`
     background-color: ${props => props.isDraggingOver 
                             ? "#dfe6e9" 
@@ -34,22 +37,6 @@ const Area = styled.div<IArea>`
     transition: background-color .3 ease-in-out;
     padding: 20px;
 `;
-
-interface IBoardProps {
-    toDos: ITodo[],
-    boardId: string;
-}
-
-const Form = styled.form`
-    width: 100%;
-    input{
-        width: 100%;
-    }
-`;
-
-interface IForm{
-    toDo: string;
-}
 
 function Board({toDos, boardId}:IBoardProps){
     const {register, setValue, handleSubmit} = useForm<IForm>();
@@ -70,12 +57,14 @@ function Board({toDos, boardId}:IBoardProps){
 
     return (
         <Wrapper >
-            <Title>{boardId}</Title>
+            <MiniTitle>{boardId}</MiniTitle>
             <Form onSubmit={handleSubmit(onValid)}>
-                <input 
+                <Input 
                     {...register("toDo",
                     {required: true})}
-                type="text" placeholder={`Add task on ${boardId}`} />
+                    type="text"
+                    placeholder={`Add task on ${boardId}`} 
+                />
             </Form>
             <Droppable droppableId={boardId}>
             {(magic, snapshot) => (
@@ -93,8 +82,7 @@ function Board({toDos, boardId}:IBoardProps){
                         />))
                     }
                     {magic.placeholder}
-                </Area>
-              
+                </Area>                
             )}
             </Droppable>
         </Wrapper>
