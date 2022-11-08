@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { ITodo, toDoState } from "../atoms";
 import { Form, Input } from "./BasicTag";
 import DraggableCard from "./DraggableCard";
-import { useState } from "react";
 import BoardTitle from "./BoardTitle";
 
 interface IArea{

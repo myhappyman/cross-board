@@ -57,7 +57,6 @@ const Trash = styled.div<IArea>`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  console.log(toDos);
   
   /**
    * 해당 함수는 드래그가 끝났을 때 실행된느 함수
@@ -72,7 +71,6 @@ function App() {
       if(window.confirm(`'${[source.droppableId]}'의 '${tmpText}'를 정말 삭제하시겠습니까?`)){
         setToDos((allBoards) => {
           const sourceBoard = [...allBoards[source.droppableId]];
-          console.log(sourceBoard);
           sourceBoard.splice(source.index, 1);
           return {
             ...allBoards,

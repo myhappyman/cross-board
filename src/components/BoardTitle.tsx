@@ -22,21 +22,24 @@ const TitleWrapper = styled.div`
         min-height: 36px;
         font-size: 16px;
         line-height: 36px;
-        width: calc(100% - 50px);
+        width: calc(100% - 62px);
         word-break: break-all;
     }
     div{
-        width: 50px;
-        text-align: center;
+        width: 62px;
+        background: none;
         border: none;
         padding-top: 8px;
         button{
+            background: none;
             cursor: pointer;
             margin-left: 5px;
-            width: 20px;
+            width: 26px;
             text-align: center;
             border: none;
+            text-align: center;
             .icon{
+                color: ${props => props.theme.textColor};
                 font-size: 16px;
             }
         }
@@ -67,21 +70,11 @@ function BoardTitle({boardId}:IBoardProps){
     };
     const modifyEdit = ({editTitle}:IForm) => {
         setToDos(allBoards => {
-            // const copyBoards = {...allBoards}; // object복사
-            // delete Object.assign(copyBoards, {[editTitle]: copyBoards[boardId] })[boardId];
-            // // console.log(copyBoards);
-            // return {
-            //     ...copyBoards
-            // }
-
             const newBoards = {} as IToDoState;
             Object.keys(allBoards).forEach(key => {
-                console.log(key);
-                if(key === boardId){
-                    newBoards[editTitle] = allBoards[key];
-                }else{
-                    newBoards[key] = allBoards[key];
-                }                
+                key === boardId 
+                ? newBoards[editTitle] = allBoards[key]
+                : newBoards[key] = allBoards[key];
             });
             return {...newBoards};
         });
