@@ -1,4 +1,4 @@
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
@@ -31,23 +31,27 @@ interface IArea{
 
 const BoardWrapper = styled.div`
   background-color: ${props => props.theme.boardColor};
-  padding-top: 10px;
+  margin-top: 10px;
   border-radius: 5px;
-  min-height: 200px;
+  width: 48px;
+  height: 48px;
   display: flex;
   flex-direction: column;
 `;
 
 const Trash = styled.div<IArea>`
-  margin-top: 30px;
-  position: relative;
-  min-width: 36px;
-  min-height: 200px;
   background-color: ${props => props.isDraggingOver 
-                            ? "#dfe6e9" 
-                            : props.draggingFromThisWith ? "#b2bec3" : "transparent"};
+                              ? props.theme.draggingColor  
+                              : props.draggingFromThisWith ? "#b2bec3" : "transparent"};
+  padding: 6px;
+  width: 48px;
+  height: 48px;  
   .icon{
     position: absolute;
+    /* color: ${props => props.theme.bgColor}; */
+    color: ${props => props.isDraggingOver 
+                              ? props.theme.cardColor 
+                              : props.draggingFromThisWith ? "#b2bec3" : props.theme.bgColor};
   }
 `;
 
@@ -59,21 +63,23 @@ function App() {
    * 해당 함수는 드래그가 끝났을 때 실행된느 함수
    */
   const onDragEnd = (info: DropResult) => {
-    console.log(info);
     const {destination, source} = info;
     if(!destination) return; //가끔 destination이 undefined이거나 없는경우가 있어서 처리함.
 
     //휴지통으로 옮긴 경우(삭제)
     if(destination?.droppableId === "trash"){
-      setToDos((allBoards) => {
-        const sourceBoard = [...allBoards[source.droppableId]];
-        console.log(sourceBoard);
-        sourceBoard.splice(source.index, 1);
-        return {
-          ...allBoards,
-          [source.droppableId]: sourceBoard
-        }
-      });
+      const tmpText = toDos[source.droppableId][source.index].text;
+      if(window.confirm(`'${[source.droppableId]}'의 '${tmpText}'를 정말 삭제하시겠습니까?`)){
+        setToDos((allBoards) => {
+          const sourceBoard = [...allBoards[source.droppableId]];
+          console.log(sourceBoard);
+          sourceBoard.splice(source.index, 1);
+          return {
+            ...allBoards,
+            [source.droppableId]: sourceBoard
+          }
+        });
+      }      
 
     //같은 보드로 옮긴 경우
     }else if(destination?.droppableId === source.droppableId){      
@@ -118,22 +124,21 @@ function App() {
         <Boards>
           {
             Object.keys(toDos).map(boardId => <Board key={boardId} toDos={toDos[boardId]} boardId={boardId} />)
-          }
-          <BoardWrapper >
-              <Droppable droppableId="trash">
-                  {(magic, snapshot) => (
-                      <Trash
-                        isDraggingOver={snapshot.isDraggingOver}
-                        draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
-                        ref={magic.innerRef}
-                        {...magic.droppableProps}
-                      >
-                        <BsFillTrashFill className="icon" size="36" color="#000" />
-                      </Trash>
-                  )}
-              </Droppable>
-          </BoardWrapper>
+          }          
         </Boards>
+        <BoardWrapper>
+            <Droppable droppableId="trash">
+                {(magic, snapshot) => (
+                    <Trash
+                      isDraggingOver={snapshot.isDraggingOver}
+                      draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
+                      ref={magic.innerRef}
+                    >
+                      <BsFillTrashFill className="icon" size="36"/>
+                    </Trash>
+                )}
+            </Droppable>
+        </BoardWrapper>
       </DragDropContext>
     </Wrapper>    
   );
