@@ -76,13 +76,7 @@ function BoardTitle({boardId}:IBoardProps){
     };
 
     const modifyEdit = ({editTitle}:IForm) => {
-        setCategory(prev => {
-            return prev.map(p => p === boardId ? editTitle : p)
-            console.log(prev);
-            return [
-                ...prev
-            ];
-        })
+        setCategory(prev => prev.map(p => p === boardId ? editTitle : p));
         setToDos(allBoards => {
             const newBoards = {} as IToDoState;
             Object.keys(allBoards).forEach(key => {
@@ -91,12 +85,6 @@ function BoardTitle({boardId}:IBoardProps){
                 : newBoards[key] = allBoards[key];
             });
             return {...newBoards};
-            // const copyBoards = {...allBoards};
-            // delete copyBoards[boardId];
-            // return {
-            //     ...copyBoards,
-            //     [editTitle]: allBoards[boardId]
-            // }
         });
         setEditMode(prev => !prev);
     };

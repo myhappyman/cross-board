@@ -24,7 +24,8 @@ interface IForm{
 
 const Wrapper = styled.div`
     background-color: ${props => props.theme.boardColor};
-    padding-top: 10px;
+    padding: 10px;
+    margin: 0 10px;
     border-radius: 5px;
     min-height: 200px;
     display: flex;

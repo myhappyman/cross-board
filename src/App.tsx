@@ -1,28 +1,34 @@
-import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { useRecoilState, } from "recoil";
 import styled from "styled-components";
-import { categoryState, IToDoState, toDoState } from "./atoms";
+import { categoryState, toDoState } from "./atoms";
 import Board from "./components/Board";
 import CategoryForm from "./components/CategoryForm";
 import DraggableTrash from "./components/DraggableTrash";
 
 const Wrapper = styled.div`
-  display: flex;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+`;
+
+const BoardWrapper = styled.div`
+    height: 250px;
+    box-sizing: border-box;
+    display: flex;
+    margin: 0 auto;
 `;
 
 const Boards = styled.div`
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(3, 3fr);
-  gap: 10px;
-  padding: 1rem;
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    padding-top: 10px;
 `;
 
 function App() {
@@ -103,7 +109,7 @@ function App() {
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="boards" direction="horizontal" type="board">
             {(magic) => (
-              <>
+              <BoardWrapper>
                 <Boards ref={magic.innerRef} {...magic.droppableProps}>
                   {category.map((boardId, index) => (                  
                       <Board 
@@ -117,7 +123,7 @@ function App() {
                 </Boards>
                 <DraggableTrash />
                 {magic.placeholder}
-              </>              
+              </BoardWrapper>              
             )}
           </Droppable>
       </DragDropContext>

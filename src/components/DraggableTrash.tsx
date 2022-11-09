@@ -15,6 +15,10 @@ const BoardWrapper = styled.div`
     height: 48px;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 `;
 
 const Trash = styled.div<IArea>`

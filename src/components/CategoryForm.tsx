@@ -31,7 +31,7 @@ function CategoryForm(){
     };
 
     return (
-        <Form onSubmit={handleSubmit(onValid)}>
+        <Form style={{position: "fixed", top: "20px"}}onSubmit={handleSubmit(onValid)}>
             <Label htmlFor="category_text">Category</Label>
             <Input 
                 {...register("category",
