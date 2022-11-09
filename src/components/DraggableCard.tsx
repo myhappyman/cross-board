@@ -3,18 +3,18 @@ import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 
 const Card = styled.div<{isDragging:boolean}>`
-    color: "#000";
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 5px;
     background-color: ${props => props.isDragging ? props.theme.draggingColor : props.theme.cardColor};
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    color: ${props => props.isDragging ? props.theme.textColor : props.theme.bgColor};
 `;
 
 interface IDraggableCardProps{
-    toDoId:number;
-    toDoText:string;
-    idx:number;
+    toDoId: number;
+    toDoText: string;
+    idx: number;
 }
 
 function DraggableCard({toDoId, toDoText, idx}:IDraggableCardProps){

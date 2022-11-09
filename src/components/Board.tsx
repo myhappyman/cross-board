@@ -1,4 +1,4 @@
-import { Droppable } from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -14,6 +14,7 @@ interface IArea{
 
 interface IBoardProps {
     toDos: ITodo[],
+    index: number,
     boardId: string;
 }
 
@@ -22,12 +23,12 @@ interface IForm{
 }
 
 const Wrapper = styled.div`
-  background-color: ${props => props.theme.boardColor};
-  padding-top: 10px;
-  border-radius: 5px;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
+    background-color: ${props => props.theme.boardColor};
+    padding-top: 10px;
+    border-radius: 5px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const Area = styled.div<IArea>`
@@ -40,7 +41,7 @@ const Area = styled.div<IArea>`
 `;
 
 
-function Board({toDos, boardId}:IBoardProps){
+function Board({toDos, boardId, index}:IBoardProps){
     const {register, setValue, handleSubmit} = useForm<IForm>();
     const setToDos = useSetRecoilState(toDoState);
     const onValid = ({toDo}:IForm) => {
@@ -58,36 +59,44 @@ function Board({toDos, boardId}:IBoardProps){
     };
     
     return (
-        <Wrapper >
-            <BoardTitle boardId={boardId} />
-            <Form onSubmit={handleSubmit(onValid)}>
-                <Input 
-                    {...register("toDo",
-                    {required: true})}
-                    type="text"
-                    placeholder={`Add task on ${boardId}`} 
-                />
-            </Form>
-            <Droppable droppableId={boardId}>
-            {(magic, snapshot) => (
-                <Area 
-                    isDraggingOver={snapshot.isDraggingOver}
-                    draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
-                    ref={magic.innerRef} {...magic.droppableProps}
+        <Draggable draggableId={boardId} index={index} key={boardId}>
+            {(magic) => (
+                <Wrapper
+                    {...magic.dragHandleProps}
+                    {...magic.draggableProps}
+                    ref={magic.innerRef}
                 >
-                    {toDos.map((toDo, idx) => (
-                        <DraggableCard 
-                            key={toDo.id} 
-                            toDoId={toDo.id} 
-                            toDoText={toDo.text} 
-                            idx={idx}
-                        />))
-                    }
-                    {magic.placeholder}
-                </Area>                
+                    <BoardTitle boardId={boardId} />
+                    <Form onSubmit={handleSubmit(onValid)}>
+                        <Input 
+                            {...register("toDo",
+                            {required: true})}
+                            type="text"
+                            placeholder={`Add task on ${boardId}`} 
+                        />
+                    </Form>
+                    <Droppable droppableId={boardId}>
+                    {(magic, snapshot) => (
+                        <Area 
+                            isDraggingOver={snapshot.isDraggingOver}
+                            draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
+                            ref={magic.innerRef} {...magic.droppableProps}
+                        >
+                            {toDos.map((toDo, idx) => (
+                                <DraggableCard 
+                                    key={toDo.id} 
+                                    toDoId={toDo.id} 
+                                    toDoText={toDo.text} 
+                                    idx={idx}
+                                />))
+                            }
+                            {magic.placeholder}
+                        </Area>                
+                    )}
+                    </Droppable>
+                </Wrapper>
             )}
-            </Droppable>
-        </Wrapper>
+        </Draggable>
     );
 }
 

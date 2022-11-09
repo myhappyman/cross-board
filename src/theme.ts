@@ -4,8 +4,8 @@ export const darkTheme:DefaultTheme = {
     bgColor: "#313532",
     textColor: "#fff",
     boardColor: "#1E1E1F",
-    cardColor: "white",
-    draggingColor: "#e55039",
+    cardColor: "#fff",
+    draggingColor: "#3779C0",
     buttonColor: "#3779C0",
     buttonTextColor: "#fff",
 }

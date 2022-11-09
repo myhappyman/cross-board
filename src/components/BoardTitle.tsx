@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { BsCheckLg, BsFillPencilFill, BsFillTrashFill } from "react-icons/bs";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { IToDoState, toDoState } from "../atoms";
+import { categoryState, IToDoState, toDoState } from "../atoms";
 import { Form, Input } from "./BasicTag";
 
 interface IForm{
@@ -54,13 +54,19 @@ function BoardTitle({boardId}:IBoardProps){
     const [editMode, setEditMode] = useState(false);
     const {register, setValue, handleSubmit} = useForm<IForm>();
     const setToDos = useSetRecoilState(toDoState);
+    const setCategory = useSetRecoilState(categoryState);
     
     const titleEdit = () => {
         setValue("editTitle", boardId);
         setEditMode(prev => !prev);
-    }
+    };
+
     const categoryDrop = () => {
         if(window.confirm(`'${boardId}' 카테고리를 삭제하시겠습니까?`)){
+            setCategory(category => {
+                return category.filter(c => c !== boardId);
+            });
+
             setToDos(allBoards => {
                 const copyBoards = {...allBoards};
                 delete copyBoards[boardId];
@@ -68,7 +74,15 @@ function BoardTitle({boardId}:IBoardProps){
             });
         }
     };
+
     const modifyEdit = ({editTitle}:IForm) => {
+        setCategory(prev => {
+            return prev.map(p => p === boardId ? editTitle : p)
+            console.log(prev);
+            return [
+                ...prev
+            ];
+        })
         setToDos(allBoards => {
             const newBoards = {} as IToDoState;
             Object.keys(allBoards).forEach(key => {
@@ -77,9 +91,16 @@ function BoardTitle({boardId}:IBoardProps){
                 : newBoards[key] = allBoards[key];
             });
             return {...newBoards};
+            // const copyBoards = {...allBoards};
+            // delete copyBoards[boardId];
+            // return {
+            //     ...copyBoards,
+            //     [editTitle]: allBoards[boardId]
+            // }
         });
         setEditMode(prev => !prev);
     };
+
     return (
         <TitleWrapper>
             {
