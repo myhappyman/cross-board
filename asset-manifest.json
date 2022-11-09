@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/cross-board/static/js/main.7b864755.js",
+    "main.js": "/cross-board/static/js/main.9f399441.js",
     "index.html": "/cross-board/index.html",
-    "main.7b864755.js.map": "/cross-board/static/js/main.7b864755.js.map"
+    "main.9f399441.js.map": "/cross-board/static/js/main.9f399441.js.map"
   },
   "entrypoints": [
-    "static/js/main.7b864755.js"
+    "static/js/main.9f399441.js"
   ]
 }
